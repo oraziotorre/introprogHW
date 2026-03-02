@@ -20,19 +20,22 @@ echo ""
 
 
 # 0. Tell me who worked on this together
-echo "student 1"   # please fill in names here
-echo "student 2"
+echo "Orazio Torre"
+echo "Dalila Maria Tamburrano"
 
 # here is a list of tasks for you.
 # whenever a line says "don't touch" then you are not supposed to touch what comes below.
 # all lines where you need to take action are numbered.
 
 # 1. Go to your home directory:
-
+cd
 
 # 2. from your home, creating a directory structure: new folder `programming-hw`, and inside that folder create folder `hw1`
+mkdir -p ./programming-hw
+mkdir -p ./programming-hw/hw1
 
 # 3. go into that new directory, i.e. into ~/programming-hw/hw1
+cd ./programming-hw/hw1
 
 # checking the folder exists now
 # don't touch
@@ -60,10 +63,11 @@ if [ ! -f  movies.dat ]; then
 fi
 
 # 4. look at first 4 rows of downloaded data in `movies.dat`. look at this output and try to understand how it is structured. the file ending is `dat`. however, how could you also denominate such a file?
-
+# It could also be denominated as a CSV file or a delimited text file.
+head -n 4 movies.dat
 
 # 5. look at first 4 rows of downloaded data in `movies.dat` redirect to a file called `first4.txt`
-
+head -4 movies.dat > first4.txt
 
 # don't touch
 if [ ! -f  first4.txt ]; then
@@ -91,33 +95,29 @@ echo ""
 # 6. use the `awk` command to separt each row at the `::` delimters
 # fill in for _filename_ the correct file you want to operate on. 
 # then remove the # character from the start of the line and look at the result
-
-# awk -F '::' '{print $3}' _filename_
+awk -F '::' '{print $3}' movies.dat
 
 # 7. observe that the `{print $3}` part prints the third field. that looks like: genre1|genre2
 # that is, there is *another* separator in this column, `|`. Let's separate again. copy your command from above and 
 # add a pipe as follows. here, the second statement will split at `|` and print into *how many parts* it has split.
 # i.e. it will tell us *how many genres* that movie belonged to. No need to understand the `awk` part.
 # again, remove the # below, fill in for _filename_ and run
-
-# awk -F '::' '{print $3}' _filename_ | awk '{print split($0, a, "\\|")}'
+awk -F '::' '{print $3}' movies.dat | awk '{print split($0, a, "\\|")}'
 
 
 # 8. finish the pipeline by adding 2 commands, exactly like in class, that will produce a contingency table
 # we want to know how many movies belong to 0,1,2,... etc genres. 
-
-# awk -F '::' '{print $3}' _filename_ | awk '{print split($0, a, "\\|")}' | sort | uniq -c
+awk -F '::' '{print $3}' movies.dat | awk '{print split($0, a, "\\|")}' | sort | uniq -c
 
 # 9. redirect (>) the output of your pipeline to a file `outtable.txt` in the current directory
-
+awk -F '::' '{print $3}' movies.dat | awk '{print split($0, a, "\\|")}' | sort | uniq -c > outtable.txt
 
 # dont touch
 echo ""   # leave this untouched
 echo "here is my table:"   # this as well
 
 # 10. Print your table to screen
-
-
+cat outtable.txt
 
 #### End of your tasks
 # please do not modify the below lines
@@ -134,11 +134,3 @@ else
     echo "wrong result :-("
     exit 1
 fi
-
-
-
-
-
-
-
-
